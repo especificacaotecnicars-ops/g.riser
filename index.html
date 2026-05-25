@@ -224,7 +224,7 @@ function renderRequests(){
   const pend=db().requests.filter(r=>r.status==='Pendente').length;
   const empresas=[...new Set(db().requests.map(r=>r.empresa).filter(Boolean))];
   document.getElementById('requests').innerHTML=`
-    <div class="top"><div><h2>Solicitações de Especificação</h2><p>Gerencie pedidos de especificações e gere o texto para e-mail.</p></div><button class="btn" onclick="openRequest()">Nova Solicitação</button></div>
+    <div class="top"><div><h2>Solicitações de Especificação </p></div><button class="btn" onclick="openRequest()">Nova Solicitação</button></div>
     <div style="display:flex;gap:12px;margin-bottom:18px">
       <div class="card" style="flex:1;padding:16px"><span class="muted">Total</span><strong style="display:block;font-size:28px;margin-top:4px">${db().requests.length}</strong></div>
       <div class="card" style="flex:1;padding:16px"><span class="muted">Pendentes</span><strong style="display:block;font-size:28px;margin-top:4px;color:${pend>0?'#b54708':'#027a48'}">${pend}</strong></div>
