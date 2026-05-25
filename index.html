@@ -397,6 +397,18 @@ function delClient(id){let c=db().clients.find(x=>x.id===id);if(!c)return;if(con
  
 /* USUÁRIOS */
 function renderUsers(){
+  if(window._getRole()!=='Administrador'){
+    // Não-admin: só vê e edita o próprio cadastro
+    const me=db().users.find(u=>u.name===window._getUser()&&!u.pending);
+    const idx=me?db().users.indexOf(me):-1;
+    document.getElementById('users').innerHTML=`
+      <div class="top"><div><h2>Meu Cadastro</h2><p>Você pode editar apenas seu próprio login e senha.</p></div></div>
+      <div class="card"><table class="table"><thead><tr><th>Nome</th><th>Login</th><th>Perfil</th><th>Ações</th></tr></thead><tbody>
+      ${me?`<tr><td>${me.name}</td><td>${me.login}</td><td><span class="badge dark">${me.role}</span></td><td><button class="iconbtn" onclick="openUser(${idx})">Editar meus dados</button></td></tr>`:'<tr><td colspan="4" class="empty">Usuário não encontrado.</td></tr>'}
+      </tbody></table></div>`;
+    return;
+  }
+  // Admin vê tudo
   const pending=db().users.filter(u=>u.pending);
   const active=db().users.filter(u=>!u.pending);
   document.getElementById('users').innerHTML=`
