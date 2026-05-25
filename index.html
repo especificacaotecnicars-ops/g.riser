@@ -15,19 +15,16 @@
 <section id="login" class="login hidden">
   <div class="login-card">
     <div class="brand"><h1>GLOBAL <span>RISER</span></h1><p>Sistema de Especificações Técnicas</p></div>
-    <!-- Tabs -->
     <div style="display:flex;gap:0;margin-bottom:20px;border-bottom:2px solid rgba(121,190,255,.22)">
       <button id="tabLogin" onclick="switchAuthTab('login')" style="flex:1;padding:10px;background:var(--blue);color:#fff;font-weight:800;border-radius:8px 8px 0 0;border:none">Entrar</button>
       <button id="tabRegister" onclick="switchAuthTab('register')" style="flex:1;padding:10px;background:rgba(255,255,255,.08);color:#8ab5d8;font-weight:700;border-radius:8px 8px 0 0;border:none;margin-left:4px">Criar Login</button>
     </div>
-    <!-- Login form -->
     <div id="formLogin">
       <label>Usuário</label><input id="loginUser" value="" onkeydown="if(event.key==='Enter')doLogin()" autocomplete="username" />
       <label>Senha</label><input id="loginPass" type="password" value="" onkeydown="if(event.key==='Enter')doLogin()" autocomplete="current-password" />
       <div id="loginErr" class="hidden" style="background:#fee4e2;color:#b42318;border-radius:8px;padding:10px 14px;margin-top:14px;font-size:13px;font-weight:700">Usuário ou senha incorretos.</div>
       <button class="btn" onclick="doLogin()">Entrar</button>
     </div>
-    <!-- Register form -->
     <div id="formRegister" class="hidden">
       <label>Nome completo</label><input id="regName" placeholder="Seu nome" />
       <label>Login</label><input id="regLogin" placeholder="Escolha um login" />
@@ -65,7 +62,6 @@
  
 <div id="modal" class="modal hidden"></div>
  
-<!-- Firebase SDKs -->
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 import { getFirestore, doc, getDoc, setDoc, onSnapshot, enableIndexedDbPersistence } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
@@ -83,8 +79,6 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const DB_DOC = doc(db, "globalriser", "maindb");
- 
-// Habilita cache offline
 try { enableIndexedDbPersistence(db); } catch(e) {}
  
 const LS_CACHE = 'globalRiserCache';
@@ -116,9 +110,7 @@ function showLogin(){
   document.getElementById('login').classList.remove('hidden');
 }
  
-// Carrega dados e inicializa app
 async function initApp() {
-  // Timeout de 6s — se Firebase demorar, usa cache local
   const timeout = setTimeout(() => {
     if(!appDb) {
       const cached = localStorage.getItem(LS_CACHE);
@@ -139,14 +131,12 @@ async function initApp() {
     localStorage.setItem(LS_CACHE, JSON.stringify(appDb));
   } catch(e) {
     clearTimeout(timeout);
-    console.error('Erro ao carregar:', e);
     const cached = localStorage.getItem(LS_CACHE);
     appDb = cached ? JSON.parse(cached) : DEFAULT_DB;
   }
  
   showLogin();
  
-  // Escuta mudanças em tempo real
   onSnapshot(DB_DOC, (snap) => {
     if (snap.exists()) {
       const newDb = JSON.parse(snap.data().data);
@@ -159,7 +149,6 @@ async function initApp() {
  
 initApp();
  
-// Expõe para o escopo global
 window._db = () => appDb;
 window._save = saveToFirebase;
 window._setDb = (d) => { appDb = d; };
@@ -205,6 +194,37 @@ function showPage(id){document.querySelectorAll('.page').forEach(p=>p.classList.
 function renderAll(){renderDash();renderSpecs();renderClients();renderUsers();renderHistory();renderRequests()}
 function unique(arr){return [...new Set(arr.filter(Boolean))]}
  
+/* AUTH TABS */
+function switchAuthTab(tab){
+  document.getElementById('formLogin').classList.toggle('hidden',tab!=='login');
+  document.getElementById('formRegister').classList.toggle('hidden',tab!=='register');
+  document.getElementById('tabLogin').style.background=tab==='login'?'var(--blue)':'rgba(255,255,255,.08)';
+  document.getElementById('tabLogin').style.color=tab==='login'?'#fff':'#8ab5d8';
+  document.getElementById('tabRegister').style.background=tab==='register'?'var(--blue)':'rgba(255,255,255,.08)';
+  document.getElementById('tabRegister').style.color=tab==='register'?'#fff':'#8ab5d8';
+}
+ 
+/* CADASTRO — sem audit pois usuário não está logado */
+function doRegister(){
+  const name=document.getElementById('regName').value.trim();
+  const login=document.getElementById('regLogin').value.trim();
+  const pass=document.getElementById('regPass').value;
+  const pass2=document.getElementById('regPass2').value;
+  const errEl=document.getElementById('regErr');
+  const okEl=document.getElementById('regOk');
+  errEl.classList.add('hidden');okEl.classList.add('hidden');
+  if(!name||!login||!pass){errEl.textContent='Preencha todos os campos.';errEl.classList.remove('hidden');return;}
+  if(pass!==pass2){errEl.textContent='As senhas não coincidem.';errEl.classList.remove('hidden');return;}
+  if(db().users.find(u=>u.login===login)){errEl.textContent='Este login já está em uso.';errEl.classList.remove('hidden');return;}
+  db().users.push({name,login,password:pass,role:'Usuário comum',pending:true});
+  save();
+  okEl.classList.remove('hidden');
+  document.getElementById('regName').value='';
+  document.getElementById('regLogin').value='';
+  document.getElementById('regPass').value='';
+  document.getElementById('regPass2').value='';
+}
+ 
 /* DASHBOARD */
 function renderDash(){let cls={};let types={};db().specs.forEach(s=>{cls[s.classification]=(cls[s.classification]||0)+1;types[s.type]=(types[s.type]||0)+1});const pendentes=db().requests.filter(r=>r.status==='Pendente').length;document.getElementById('dashboard').innerHTML=`<div class="top"><div><h2>Dashboard</h2><p>Visão geral do sistema de especificações.</p></div></div><div class="grid"><div class="card metric">Total de Especificações<strong>${db().specs.length}</strong></div><div class="card metric">Clientes Ativos<strong>${db().clients.length}</strong></div><div class="card metric">Solicitações Pendentes<strong style="color:${pendentes>0?'#b54708':'#027a48'}">${pendentes}</strong></div></div><div class="grid" style="margin-top:18px"><div class="card"><h3>Por Classificação</h3><br>${Object.entries(cls).map(([k,v])=>`<p>${k} <b style="float:right">${v}</b></p><br>`).join('')}</div><div class="card"><h3>Por Tipo</h3><br>${Object.entries(types).map(([k,v])=>`<p>${k} <b style="float:right">${v}</b></p><br>`).join('')}</div><div class="card"><h3>Histórico Recente</h3><br>${db().audit.slice(0,4).map(h=>`<p><b>${h.action}</b><br><span class="muted">${h.user} • ${h.date}</span></p><br>`).join('')||'<p class="muted">Sem histórico.</p>'}</div></div><div class="card" style="margin-top:18px"><h3>Especificações Recentes</h3><br>${tableSpecs(db().specs.slice(0,5),false)}</div>`}
  
@@ -224,7 +244,7 @@ function renderRequests(){
   const pend=db().requests.filter(r=>r.status==='Pendente').length;
   const empresas=[...new Set(db().requests.map(r=>r.empresa).filter(Boolean))];
   document.getElementById('requests').innerHTML=`
-    <div class="top"><div><h2>Solicitações de Especificação </p></div><button class="btn" onclick="openRequest()">Nova Solicitação</button></div>
+    <div class="top"><div><h2>Solicitações de Especificação</h2></div><button class="btn" onclick="openRequest()">Nova Solicitação</button></div>
     <div style="display:flex;gap:12px;margin-bottom:18px">
       <div class="card" style="flex:1;padding:16px"><span class="muted">Total</span><strong style="display:block;font-size:28px;margin-top:4px">${db().requests.length}</strong></div>
       <div class="card" style="flex:1;padding:16px"><span class="muted">Pendentes</span><strong style="display:block;font-size:28px;margin-top:4px;color:${pend>0?'#b54708':'#027a48'}">${pend}</strong></div>
@@ -232,15 +252,8 @@ function renderRequests(){
     </div>
     <div class="toolbar" style="margin-bottom:14px">
       <input id="rqSearch" oninput="filterRequests()" placeholder="🔍 Pesquisar solicitante, empresa, spec...">
-      <select id="rqStatus" onchange="filterRequests()">
-        <option value="">Todos os status</option>
-        <option>Pendente</option>
-        <option>Atendido</option>
-      </select>
-      <select id="rqEmpresa" onchange="filterRequests()">
-        <option value="">Todas as empresas</option>
-        ${empresas.map(e=>`<option>${e}</option>`).join('')}
-      </select>
+      <select id="rqStatus" onchange="filterRequests()"><option value="">Todos os status</option><option>Pendente</option><option>Atendido</option></select>
+      <select id="rqEmpresa" onchange="filterRequests()"><option value="">Todas as empresas</option>${empresas.map(e=>`<option>${e}</option>`).join('')}</select>
       <input id="rqDataDe" type="date" onchange="filterRequests()" title="Data inicial">
       <input id="rqDataAte" type="date" onchange="filterRequests()" title="Data final">
       <button class="btn secondary" onclick="clearReqFilters()" style="white-space:nowrap">Limpar filtros</button>
@@ -248,10 +261,7 @@ function renderRequests(){
     <div id="reqList"></div>`;
   filterRequests();
 }
-function clearReqFilters(){
-  ['rqSearch','rqStatus','rqEmpresa','rqDataDe','rqDataAte'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
-  filterRequests();
-}
+function clearReqFilters(){['rqSearch','rqStatus','rqEmpresa','rqDataDe','rqDataAte'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});filterRequests();}
 function filterRequests(){
   const q=(document.getElementById('rqSearch')?.value||'').toLowerCase();
   const st=document.getElementById('rqStatus')?.value||'';
@@ -262,33 +272,25 @@ function filterRequests(){
     if(q&&!JSON.stringify(r).toLowerCase().includes(q))return false;
     if(st&&r.status!==st)return false;
     if(emp&&r.empresa!==emp)return false;
-    if(de||ate){
-      // date format is dd/mm/yyyy hh:mm:ss — parse it
-      const parts=r.date.split(/[\/\s,:]/);
-      const rDate=parts.length>=3?`${parts[2]}-${parts[1].padStart(2,'0')}-${parts[0].padStart(2,'0')}`:'';
-      if(de&&rDate&&rDate<de)return false;
-      if(ate&&rDate&&rDate>ate)return false;
-    }
+    if(de||ate){const parts=r.date.split(/[\/\s,:]/);const rDate=parts.length>=3?`${parts[2]}-${parts[1].padStart(2,'0')}-${parts[0].padStart(2,'0')}`:'';if(de&&rDate&&rDate<de)return false;if(ate&&rDate&&rDate>ate)return false;}
     return true;
   });
   const el=document.getElementById('reqList');
   if(!el)return;
-  el.innerHTML=list.length===0
-    ?`<div class="card"><p class="empty">Nenhuma solicitação encontrada.</p></div>`
-    :list.map(r=>`
-      <div class="req-card">
-        <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:10px">
-          <div><h4>${r.solicitante} <span class="muted">— ${r.empresa||'Empresa não informada'}</span></h4><p class="muted" style="margin-top:4px">${r.date} • ${r.specs.length} especificação(ões)</p></div>
-          <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
-            <span class="req-status ${r.status==='Pendente'?'pendente':'atendido'}">${r.status}</span>
-            <button class="iconbtn" onclick="viewEmailText(${r.id})">Ver E-mail</button>
-            ${r.status==='Pendente'?`<button class="iconbtn success" onclick="markAtendido(${r.id})">Marcar Atendido</button>`:''}
-            <button class="iconbtn danger" onclick="delRequest(${r.id})">Excluir</button>
-          </div>
+  el.innerHTML=list.length===0?`<div class="card"><p class="empty">Nenhuma solicitação encontrada.</p></div>`:list.map(r=>`
+    <div class="req-card">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:10px">
+        <div><h4>${r.solicitante} <span class="muted">— ${r.empresa||'Empresa não informada'}</span></h4><p class="muted" style="margin-top:4px">${r.date} • ${r.specs.length} especificação(ões)</p></div>
+        <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+          <span class="req-status ${r.status==='Pendente'?'pendente':'atendido'}">${r.status}</span>
+          <button class="iconbtn" onclick="viewEmailText(${r.id})">Ver E-mail</button>
+          ${r.status==='Pendente'?`<button class="iconbtn success" onclick="markAtendido(${r.id})">Marcar Atendido</button>`:''}
+          <button class="iconbtn danger" onclick="delRequest(${r.id})">Excluir</button>
         </div>
-        <div style="margin-top:12px;display:flex;flex-wrap:wrap;gap:6px">${r.specs.map(s=>`<span class="badge purple">${s.part} — ${s.name}</span>`).join('')}</div>
-        ${r.obs?`<p style="margin-top:10px;font-size:13px;color:#475467"><b>Obs:</b> ${r.obs}</p>`:''}
-      </div>`).join('');
+      </div>
+      <div style="margin-top:12px;display:flex;flex-wrap:wrap;gap:6px">${r.specs.map(s=>`<span class="badge purple">${s.part} — ${s.name}</span>`).join('')}</div>
+      ${r.obs?`<p style="margin-top:10px;font-size:13px;color:#475467"><b>Obs:</b> ${r.obs}</p>`:''}
+    </div>`).join('');
 }
 function openRequest(){
   document.getElementById('modal').classList.remove('hidden');
@@ -362,56 +364,14 @@ function exportBackup(){
 function exportExcel(){
   const d=db();
   const wb={SheetNames:[],Sheets:{}};
- 
-  function toSheet(rows){
-    if(!rows||!rows.length)return {A1:{v:'Sem dados',t:'s'}};
-    const keys=Object.keys(rows[0]);
-    const ws={};
-    const range={s:{c:0,r:0},e:{c:keys.length-1,r:rows.length}};
-    keys.forEach((k,c)=>{ws[XLSX.utils.encode_cell({r:0,c})]={v:k,t:'s',s:{font:{bold:true}}};});
-    rows.forEach((row,r)=>{
-      keys.forEach((k,c)=>{
-        const val=Array.isArray(row[k])?row[k].filter(Boolean).join(', '):(row[k]??'');
-        ws[XLSX.utils.encode_cell({r:r+1,c})]={v:String(val),t:'s'};
-      });
-    });
-    ws['!ref']=XLSX.utils.encode_range(range);
-    return ws;
-  }
- 
-  // Especificações — flatten torques
-  const specs=d.specs.map(s=>({
-    'Part Number':s.part,'Nome':s.name,'Cliente':s.client,'Modelo':s.model,
-    'Tipo Riser':s.riserType,'Classificação':s.classification,'Tipo':s.type,
-    'Categoria':s.category,'Preservação':s.preservation,
-    'Torque 1':s.torques[0]||'','Torque 2':s.torques[1]||'','Torque 3':s.torques[2]||'',
-    'Torque 4':s.torques[3]||'','Torque 5':s.torques[4]||'',
-    'Revisão':s.revision,'Observações':s.notes
-  }));
- 
-  // Clientes
-  const clients=d.clients.map(c=>({'Nome':c.name,'Modelos':( c.models||[]).join(', ')}));
- 
-  // Usuários
+  function toSheet(rows){if(!rows||!rows.length)return{A1:{v:'Sem dados',t:'s'}};const keys=Object.keys(rows[0]);const ws={};const range={s:{c:0,r:0},e:{c:keys.length-1,r:rows.length}};keys.forEach((k,c)=>{ws[XLSX.utils.encode_cell({r:0,c})]={v:k,t:'s'};});rows.forEach((row,r)=>{keys.forEach((k,c)=>{const val=Array.isArray(row[k])?row[k].filter(Boolean).join(', '):(row[k]??'');ws[XLSX.utils.encode_cell({r:r+1,c})]={v:String(val),t:'s'};});});ws['!ref']=XLSX.utils.encode_range(range);return ws;}
+  const specs=d.specs.map(s=>({'Part Number':s.part,'Nome':s.name,'Cliente':s.client,'Modelo':s.model,'Tipo Riser':s.riserType,'Classificação':s.classification,'Tipo':s.type,'Categoria':s.category,'Preservação':s.preservation,'Torque 1':s.torques[0]||'','Torque 2':s.torques[1]||'','Torque 3':s.torques[2]||'','Torque 4':s.torques[3]||'','Torque 5':s.torques[4]||'','Revisão':s.revision,'Observações':s.notes}));
+  const clients=d.clients.map(c=>({'Nome':c.name,'Modelos':(c.models||[]).join(', ')}));
   const users=d.users.map(u=>({'Nome':u.name,'Login':u.login,'Perfil':u.role,'Status':u.pending?'Pendente':'Ativo'}));
- 
-  // Solicitações
-  const reqs=d.requests.map(r=>({
-    'Solicitante':r.solicitante,'Empresa':r.empresa,'Email':r.email,
-    'Telefone':r.tel,'Data':r.date,'Status':r.status,
-    'Specs Solicitadas':r.specs.map(s=>s.part).join(', '),'Observações':r.obs||''
-  }));
- 
-  // Histórico
-  const audit=d.audit.map(h=>({'Data':h.date,'Usuário':h.user,'Ação':h.action,'Módulo':h.module,'Detalhe':h.detail,'Revisão':h.revision||''}));
- 
+  const reqs=d.requests.map(r=>({'Solicitante':r.solicitante,'Empresa':r.empresa,'Email':r.email,'Telefone':r.tel,'Data':r.date,'Status':r.status,'Specs Solicitadas':r.specs.map(s=>s.part).join(', '),'Observações':r.obs||''}));
+  const auditRows=d.audit.map(h=>({'Data':h.date,'Usuário':h.user,'Ação':h.action,'Módulo':h.module,'Detalhe':h.detail,'Revisão':h.revision||''}));
   wb.SheetNames.push('Especificações','Clientes','Usuários','Solicitações','Histórico');
-  wb.Sheets['Especificações']=toSheet(specs);
-  wb.Sheets['Clientes']=toSheet(clients);
-  wb.Sheets['Usuários']=toSheet(users);
-  wb.Sheets['Solicitações']=toSheet(reqs);
-  wb.Sheets['Histórico']=toSheet(audit);
- 
+  wb.Sheets['Especificações']=toSheet(specs);wb.Sheets['Clientes']=toSheet(clients);wb.Sheets['Usuários']=toSheet(users);wb.Sheets['Solicitações']=toSheet(reqs);wb.Sheets['Histórico']=toSheet(auditRows);
   const wbout=XLSX.write(wb,{bookType:'xlsx',type:'binary'});
   function s2ab(s){const buf=new ArrayBuffer(s.length);const view=new Uint8Array(buf);for(let i=0;i<s.length;i++)view[i]=s.charCodeAt(i)&0xFF;return buf;}
   const blob=new Blob([s2ab(wbout)],{type:'application/octet-stream'});
@@ -420,36 +380,6 @@ function exportExcel(){
   a.href=url;a.download='globalriser-backup-'+new Date().toISOString().slice(0,10)+'.xlsx';
   a.click();URL.revokeObjectURL(url);
   audit('Backup Excel','Sistema','Backup Excel exportado');
-}
- 
-/* AUTH TABS */
-function switchAuthTab(tab){
-  document.getElementById('formLogin').classList.toggle('hidden',tab!=='login');
-  document.getElementById('formRegister').classList.toggle('hidden',tab!=='register');
-  document.getElementById('tabLogin').style.background=tab==='login'?'var(--blue)':'rgba(255,255,255,.08)';
-  document.getElementById('tabLogin').style.color=tab==='login'?'#fff':'#8ab5d8';
-  document.getElementById('tabRegister').style.background=tab==='register'?'var(--blue)':'rgba(255,255,255,.08)';
-  document.getElementById('tabRegister').style.color=tab==='register'?'#fff':'#8ab5d8';
-}
-function doRegister(){
-  const name=document.getElementById('regName').value.trim();
-  const login=document.getElementById('regLogin').value.trim();
-  const pass=document.getElementById('regPass').value;
-  const pass2=document.getElementById('regPass2').value;
-  const errEl=document.getElementById('regErr');
-  const okEl=document.getElementById('regOk');
-  errEl.classList.add('hidden');okEl.classList.add('hidden');
-  if(!name||!login||!pass){errEl.textContent='Preencha todos os campos.';errEl.classList.remove('hidden');return;}
-  if(pass!==pass2){errEl.textContent='As senhas não coincidem.';errEl.classList.remove('hidden');return;}
-  if(db().users.find(u=>u.login===login)){errEl.textContent='Este login já está em uso.';errEl.classList.remove('hidden');return;}
-  db().users.push({name,login,password:pass,role:'Pendente',pending:true});
-  audit('Cadastro Pendente','Usuários',`${name} (${login}) solicitou acesso`);
-  save();
-  okEl.classList.remove('hidden');
-  document.getElementById('regName').value='';
-  document.getElementById('regLogin').value='';
-  document.getElementById('regPass').value='';
-  document.getElementById('regPass2').value='';
 }
  
 /* CLIENTES */
@@ -463,24 +393,23 @@ function renderUsers(){
   const pending=db().users.filter(u=>u.pending);
   const active=db().users.filter(u=>!u.pending);
   document.getElementById('users').innerHTML=`
-    <div class="top"><div><h2>Usuários</h2><p>Gerencie usuários ativos e aprovar solicitações de cadastro.</p></div><button class="btn" onclick="openUser()">Adicionar Usuário</button></div>
-    ${pending.length?`<div class="card" style="margin-bottom:18px;border-left:4px solid #b54708"><h3 style="color:#b54708;margin-bottom:12px">⏳ Cadastros Pendentes (${pending.length})</h3>${pending.map((u,i)=>`<div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--border)"><div><b>${u.name}</b> <span class="muted">— ${u.login}</span></div><div style="display:flex;gap:8px"><button class="iconbtn success" onclick="approveUser('${u.login}')">✔ Aprovar</button><button class="iconbtn danger" onclick="rejectUser('${u.login}')">✖ Recusar</button></div></div>`).join('')}</div>`:''}
-    <div class="card"><table class="table"><thead><tr><th>Nome</th><th>Login</th><th>Perfil</th><th>Ações</th></tr></thead><tbody>${active.map((u,i)=>`<tr><td>${u.name}</td><td>${u.login}</td><td><span class="badge dark">${u.role}</span></td><td class="actions"><button class="iconbtn" onclick="openUser(${db().users.indexOf(u)})">Editar</button><button class="iconbtn danger" onclick="delUser(${db().users.indexOf(u)})">Excluir</button></td></tr>`).join('')||'<tr><td colspan="4" class="empty">Nenhum usuário cadastrado.</td></tr>'}</tbody></table></div>`;
+    <div class="top"><div><h2>Usuários</h2><p>Gerencie usuários ativos e solicitações de cadastro.</p></div><button class="btn" onclick="openUser()">Adicionar Usuário</button></div>
+    ${pending.length?`<div class="card" style="margin-bottom:18px;border-left:4px solid #b54708;background:#fffbf5"><h3 style="color:#b54708;margin-bottom:12px">⏳ Cadastros Pendentes (${pending.length})</h3>${pending.map(u=>`<div style="display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid var(--border)"><div><b>${u.name}</b><span class="muted" style="margin-left:8px">— login: ${u.login}</span></div><div style="display:flex;gap:8px"><button class="btn success" style="padding:8px 14px;font-size:13px" onclick="approveUser('${u.login}')">✔ Aprovar</button><button class="btn danger" style="padding:8px 14px;font-size:13px" onclick="rejectUser('${u.login}')">✖ Recusar</button></div></div>`).join('')}</div>`:''}
+    <div class="card"><table class="table"><thead><tr><th>Nome</th><th>Login</th><th>Perfil</th><th>Ações</th></tr></thead><tbody>${active.map(u=>`<tr><td>${u.name}</td><td>${u.login}</td><td><span class="badge dark">${u.role}</span></td><td class="actions"><button class="iconbtn" onclick="openUser(${db().users.indexOf(u)})">Editar</button><button class="iconbtn danger" onclick="delUser(${db().users.indexOf(u)})">Excluir</button></td></tr>`).join('')||'<tr><td colspan="4" class="empty">Nenhum usuário cadastrado.</td></tr>'}</tbody></table></div>`;
 }
 function approveUser(login){
   const idx=db().users.findIndex(u=>u.login===login);
   if(idx<0)return;
   db().users[idx].pending=false;
-  db().users[idx].role=db().users[idx].role==='Pendente'?'Usuário comum':db().users[idx].role;
-  audit('Aprovação','Usuários',`${db().users[idx].name} aprovado`);
-  save();showPage('users');
+  db().users[idx].role='Usuário comum';
+  save();
+  showPage('users');
 }
 function rejectUser(login){
   const u=db().users.find(x=>x.login===login);
   if(!u)return;
   if(confirm(`Recusar e remover cadastro de ${u.name}?`)){
     window._db().users=db().users.filter(x=>x.login!==login);
-    audit('Recusa','Usuários',`${u.name} recusado`);
     save();showPage('users');
   }
 }
@@ -489,7 +418,7 @@ function saveUser(index){let name=v('userName'),login=v('userLogin'),password=do
 function delUser(index){let u=db().users[index];if(!u)return;if(db().users.length===1){alert('É necessário manter pelo menos um usuário.');return}if(confirm('Excluir usuário?')){db().users.splice(index,1);audit('Remoção','Usuários',u.name);save();showPage('users')}}
  
 /* HISTÓRICO */
-function renderHistory(){document.getElementById('history').innerHTML=`<div class="top"><div><h2>Histórico Geral do Sistema</h2><p>Banco de atividades: </p></div></div><div class="toolbar"><input id="hQ" oninput="filterHistory()" placeholder="Pesquisar histórico..."><select id="hM" onchange="filterHistory()"><option value="">Todos os módulos</option><option>Autenticação</option><option>Especificações</option><option>Clientes</option><option>Usuários</option><option>Solicitações</option></select></div><div class="card" id="historyTable"></div>`;filterHistory()}
+function renderHistory(){document.getElementById('history').innerHTML=`<div class="top"><div><h2>Histórico Geral do Sistema</h2></div></div><div class="toolbar"><input id="hQ" oninput="filterHistory()" placeholder="Pesquisar histórico..."><select id="hM" onchange="filterHistory()"><option value="">Todos os módulos</option><option>Autenticação</option><option>Especificações</option><option>Clientes</option><option>Usuários</option><option>Solicitações</option></select></div><div class="card" id="historyTable"></div>`;filterHistory()}
 function filterHistory(){let q=(document.getElementById('hQ')?.value||'').toLowerCase(),m=document.getElementById('hM')?.value||'';let list=db().audit.filter(h=>(!q||JSON.stringify(h).toLowerCase().includes(q))&&(!m||h.module===m));document.getElementById('historyTable').innerHTML=`<table class="table"><thead><tr><th>Data/Hora</th><th>Usuário</th><th>Ação</th><th>Módulo</th><th>Detalhe</th><th>Revisão</th></tr></thead><tbody>${list.map(h=>`<tr><td>${h.date}</td><td>${h.user}</td><td>${h.action}</td><td>${h.module}</td><td>${h.detail}</td><td>${h.revision||'-'}</td></tr>`).join('')||'<tr><td colspan="6" class="empty">Sem registros.</td></tr>'}</tbody></table>`}
  
 /* FILTROS */
@@ -498,7 +427,6 @@ function clearSpecFilters(){const q=document.getElementById('q');const fC=docume
 /* IMPRIMIR */
 function printSpec(id){let s=db().specs.find(x=>x.id===id);if(!s)return;const torqs=s.torques.filter(t=>t).map((t,i)=>`<tr><td>Torque ${i+1}</td><td>${t}</td></tr>`).join('');const w=window.open('','_blank','width=800,height=700');w.document.write(`<!DOCTYPE html><html><head><meta charset="UTF-8"><title>${s.part} — ${s.name}</title><style>body{font-family:Arial,sans-serif;padding:32px;color:#152033}h1{color:#168fff;font-size:22px;margin-bottom:4px}h2{font-size:14px;color:#667085;font-weight:400;margin-bottom:24px}table{width:100%;border-collapse:collapse;margin-bottom:18px}th{background:#edf5ff;text-align:left;padding:9px 12px;font-size:12px;text-transform:uppercase;letter-spacing:.05em;color:#344054}td{padding:9px 12px;border-bottom:1px solid #e4eaf2;font-size:13px}.label{font-weight:700;color:#152033;width:200px}.header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:24px;padding-bottom:16px;border-bottom:2px solid #168fff}.meta{font-size:12px;color:#667085;text-align:right}.badge{display:inline-block;background:#edf5ff;color:#168fff;border-radius:5px;padding:3px 8px;font-size:11px;font-weight:700}@media print{body{padding:16px}}</style></head><body><div class="header"><div><h1>GLOBAL <em>RISER</em></h1><h2>Sistema de Especificações Técnicas</h2></div><div class="meta">Impresso em: ${new Date().toLocaleString('pt-BR')}<br>Usuário: ${window._getUser()}</div></div><h2 style="font-size:18px;font-weight:800;color:#152033;margin-bottom:4px">${s.part} — ${s.name}</h2><p style="margin-bottom:20px"><span class="badge">${s.model}</span> &nbsp; <span class="badge" style="background:#f0fdf4;color:#027a48">${s.classification}</span> &nbsp; <span class="badge" style="background:#fff7ed;color:#b45309">${s.category}</span></p><table><tr><th class="label">Campo</th><th>Valor</th></tr><tr><td class="label">Part Number</td><td>${s.part}</td></tr><tr><td class="label">Nome</td><td>${s.name}</td></tr><tr><td class="label">Cliente</td><td>${s.client}</td></tr><tr><td class="label">Modelo de Riser</td><td>${s.model}</td></tr><tr><td class="label">Tipo do Riser</td><td>${s.riserType}</td></tr><tr><td class="label">Classificação</td><td>${s.classification}</td></tr><tr><td class="label">Tipo</td><td>${s.type}</td></tr><tr><td class="label">Categoria</td><td>${s.category}</td></tr><tr><td class="label">Revisão</td><td>${s.revision||'—'}</td></tr><tr><td class="label">Preservação</td><td>${s.preservation||'—'}</td></tr>${torqs}<tr><td class="label">Observações</td><td>${s.notes||'—'}</td></tr></table>${s.history&&s.history.length?`<h3 style="margin-bottom:8px;font-size:13px;text-transform:uppercase;letter-spacing:.06em;color:#667085">Histórico de revisões</h3><table><tr><th>Ação</th><th>Revisão</th><th>Usuário</th><th>Data</th></tr>${s.history.map(h=>`<tr><td>${h.action}</td><td>${h.revision||'—'}</td><td>${h.user}</td><td>${h.date}</td></tr>`).join('')}</table>`:''}<script>window.onload=()=>window.print()<\/script></body></html>`);w.document.close();}
 </script>
-<!-- SheetJS for Excel export -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 </body>
 </html>
