@@ -292,6 +292,12 @@ function filterRequests(){
       ${r.obs?`<p style="margin-top:10px;font-size:13px;color:#475467"><b>Obs:</b> ${r.obs}</p>`:''}
     </div>`).join('');
 }
+function filterSpecList(){
+  const q=(document.getElementById('specSearch')?.value||'').toLowerCase();
+  document.querySelectorAll('#specCheckList .spec-check-item').forEach(item=>{
+    item.style.display=(!q||item.dataset.search.includes(q))?'':'none';
+  });
+}
 function openRequest(){
   document.getElementById('modal').classList.remove('hidden');
   document.getElementById('modal').innerHTML=`
@@ -305,9 +311,10 @@ function openRequest(){
         <label class="full">Observações / Finalidade<textarea id="rqObs" rows="2" placeholder="Ex.: para campanha de manutenção preventiva..."></textarea></label>
       </div>
       <p style="margin:16px 0 8px;font-weight:700">Selecione as especificações solicitadas:</p>
+      <input id="specSearch" oninput="filterSpecList()" placeholder="🔍 Pesquisar part number, nome, modelo, cliente..." style="width:100%;padding:11px 12px;border:1px solid var(--border);border-radius:10px;background:#fff;margin-bottom:10px">
       <div class="spec-check-list" id="specCheckList">
         ${db().specs.length===0?'<p class="empty">Nenhuma especificação cadastrada.</p>':db().specs.map(s=>`
-          <label class="spec-check-item">
+          <label class="spec-check-item" data-search="${(s.part+' '+s.name+' '+s.model+' '+s.client+' '+s.category).toLowerCase()}">
             <input type="checkbox" value="${s.id}" id="chk_${s.id}">
             <div><b>${s.part}</b> — ${s.name}<span class="muted" style="display:block;font-size:12px">${s.client} • ${s.model} • ${s.category}</span></div>
           </label>`).join('')}
