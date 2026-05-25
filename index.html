@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>GLOBAL RISER | Especificações Técnicas</title>
+<style>
+:root{--blue:#168fff;--blue2:#00b7ff;--navy:#061321;--navy2:#0b1b2d;--bg:#f4f7fb;--text:#152033;--sub:#667085;--border:#e4eaf2;--card:#fff;--soft:#edf5ff;--danger:#b42318;--green:#027a48}*{box-sizing:border-box;margin:0;padding:0;font-family:Inter,"Segoe UI",Arial,sans-serif}body{min-height:100vh;background:var(--bg);color:var(--text)}button,input,select,textarea{font:inherit}button{border:0;cursor:pointer}.hidden{display:none!important;pointer-events:none!important}.login{min-height:100vh;display:grid;place-items:center;padding:28px;background:radial-gradient(circle at 48% 35%,rgba(0,141,242,.16),transparent 28%),radial-gradient(circle at 82% 85%,rgba(0,183,255,.20),transparent 30%),linear-gradient(135deg,#020914,#04111f 48%,#06243b);color:#fff}.login-card{width:min(520px,100%);padding:34px;border-radius:18px;background:rgba(6,20,34,.82);border:1px solid rgba(121,190,255,.22);box-shadow:0 28px 90px rgba(0,0,0,.35)}.brand{text-align:center;margin-bottom:28px}.brand h1,.side-brand h1{white-space:nowrap;font-style:italic;font-weight:900;letter-spacing:-1px;color:var(--blue)}.brand h1{font-size:34px}.brand h1 span,.side-brand h1 span{color:white}.brand p,.side-brand p{text-transform:uppercase;letter-spacing:.28em;color:#8ab5d8;font-size:12px;margin-top:6px}.login label{display:block;margin:16px 0 7px;color:#d9e8f5;font-weight:700}.login input{width:100%;padding:13px;border-radius:8px;border:1px solid rgba(150,197,238,.28);background:#071526;color:#fff}.btn{padding:12px 16px;border-radius:10px;background:var(--blue);color:white;font-weight:800}.btn.secondary{background:#eef4fb;color:#344054}.btn.danger{background:#fee4e2;color:var(--danger)}.btn.success{background:#dcfae6;color:#027a48}.login .btn{width:100%;margin-top:22px}.app{display:flex;min-height:100vh}.sidebar{width:285px;background:#fff;border-right:1px solid var(--border);padding:26px 20px;display:flex;flex-direction:column}.side-brand{padding:0 4px 25px;border-bottom:1px solid var(--border);margin-bottom:20px}.side-brand h1{font-size:26px;color:#087ee3}.side-brand h1 span{color:#1f2937}.nav{display:grid;gap:8px}.nav button{display:flex;align-items:center;gap:12px;padding:13px 14px;border-radius:12px;background:transparent;color:#53627a;font-size:16px;text-align:left}.nav button.active{background:var(--soft);color:#0866c6;font-weight:800}.userbox{margin-top:auto;border-top:1px solid var(--border);padding-top:18px;color:#475467}.content{flex:1;padding:32px;overflow:auto}.top{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;margin-bottom:22px}.top h2{font-size:34px}.top p{color:var(--sub);margin-top:4px}.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}.card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:20px;box-shadow:0 8px 22px rgba(16,24,40,.05)}.metric strong{display:block;font-size:34px;margin-top:10px}.toolbar{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px;margin-bottom:18px}.toolbar input,.toolbar select,.form input,.form select,.form textarea{width:100%;padding:11px 12px;border:1px solid var(--border);border-radius:10px;background:#fff}.table-wrap{overflow:auto}.table{width:100%;border-collapse:collapse}.table th,.table td{padding:13px 10px;border-bottom:1px solid var(--border);text-align:left;vertical-align:top}.table th{color:#475467;font-size:13px;text-transform:uppercase;letter-spacing:.04em}.badge{display:inline-flex;padding:5px 9px;border-radius:999px;background:#e8f3ff;color:#0068c9;font-weight:800;font-size:12px}.badge.dark{background:#eef2f6;color:#344054}.badge.green{background:#dcfae6;color:var(--green)}.badge.warn{background:#fff1d6;color:#b54708}.badge.purple{background:#f4f3ff;color:#5925dc}.actions{display:flex;gap:8px;flex-wrap:wrap}.iconbtn{padding:8px 10px;border-radius:8px;background:#eef4fb;color:#344054}.iconbtn.danger{background:#fee4e2;color:var(--danger)}.section-title{font-size:22px;margin:22px 0 14px}.form{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.form .full{grid-column:1/-1}.modal{position:fixed;inset:0;background:rgba(2,8,18,.58);display:grid;place-items:center;padding:18px;z-index:10}.modal-box{width:min(980px,100%);max-height:92vh;overflow:auto;background:#fff;border-radius:18px;padding:24px;box-shadow:0 24px 80px rgba(0,0,0,.35)}.modal-head{display:flex;justify-content:space-between;gap:10px;margin-bottom:18px}.close{font-size:24px;background:transparent;color:#667085}.history-list{display:grid;gap:10px}.history-item{border:1px solid var(--border);border-radius:12px;padding:12px;background:#fbfcfe}.muted{color:var(--sub);font-size:13px}.empty{padding:20px;color:#667085;text-align:center}.modal-actions{display:flex;justify-content:flex-end;gap:10px;margin-top:18px}.mini-row{display:flex;gap:10px;align-items:center}.mini-row input{flex:1}.spec-check-list{display:grid;gap:8px;max-height:280px;overflow-y:auto;border:1px solid var(--border);border-radius:10px;padding:12px;background:#f9fbfe}.spec-check-item{display:flex;align-items:flex-start;gap:10px;padding:8px;border-radius:8px;cursor:pointer;transition:background .15s}.spec-check-item:hover{background:var(--soft)}.spec-check-item input[type=checkbox]{margin-top:3px;accent-color:var(--blue);width:16px;height:16px;flex-shrink:0}.email-box{background:#f0f4ff;border:1px solid #c7d9ff;border-radius:12px;padding:18px;font-family:monospace;font-size:13px;white-space:pre-wrap;line-height:1.6;color:#152033;max-height:420px;overflow-y:auto}.copy-banner{background:#dcfae6;color:#027a48;border-radius:8px;padding:10px 14px;font-size:13px;font-weight:700;margin-top:10px;display:none}.req-card{border:1px solid var(--border);border-radius:14px;padding:18px;background:#fff;margin-bottom:14px}.req-card h4{font-size:16px;margin-bottom:4px}.req-status{display:inline-flex;padding:4px 10px;border-radius:999px;font-size:12px;font-weight:800}.req-status.pendente{background:#fff1d6;color:#b54708}.req-status.atendido{background:#dcfae6;color:#027a48}.loading-overlay{position:fixed;inset:0;background:rgba(2,8,18,.7);display:grid;place-items:center;z-index:100;color:#fff;font-size:18px;font-weight:700}@media(max-width:900px){.app{display:block}.sidebar{width:100%;min-height:auto}.grid,.toolbar,.form{grid-template-columns:1fr}.content{padding:20px}.top{display:block}}
+</style>
+</head>
+<body>
+ 
+<div id="loadingOverlay" class="loading-overlay">⏳ Conectando ao banco de dados...</div>
+ 
+<section id="login" class="login hidden">
+  <div class="login-card">
+    <div class="brand"><h1>GLOBAL <span>RISER</span></h1><p>Sistema de Especificações Técnicas</p></div>
+    <!-- Tabs -->
+    <div style="display:flex;gap:0;margin-bottom:20px;border-bottom:2px solid rgba(121,190,255,.22)">
+      <button id="tabLogin" onclick="switchAuthTab('login')" style="flex:1;padding:10px;background:var(--blue);color:#fff;font-weight:800;border-radius:8px 8px 0 0;border:none">Entrar</button>
+      <button id="tabRegister" onclick="switchAuthTab('register')" style="flex:1;padding:10px;background:rgba(255,255,255,.08);color:#8ab5d8;font-weight:700;border-radius:8px 8px 0 0;border:none;margin-left:4px">Criar Login</button>
+    </div>
+    <!-- Login form -->
+    <div id="formLogin">
+      <label>Usuário</label><input id="loginUser" value="" onkeydown="if(event.key==='Enter')doLogin()" autocomplete="username" />
+      <label>Senha</label><input id="loginPass" type="password" value="" onkeydown="if(event.key==='Enter')doLogin()" autocomplete="current-password" />
+      <div id="loginErr" class="hidden" style="background:#fee4e2;color:#b42318;border-radius:8px;padding:10px 14px;margin-top:14px;font-size:13px;font-weight:700">Usuário ou senha incorretos.</div>
+      <button class="btn" onclick="doLogin()">Entrar</button>
+    </div>
+    <!-- Register form -->
+    <div id="formRegister" class="hidden">
+      <label>Nome completo</label><input id="regName" placeholder="Seu nome" />
+      <label>Login</label><input id="regLogin" placeholder="Escolha um login" />
+      <label>Senha</label><input id="regPass" type="password" placeholder="Crie uma senha" />
+      <label>Confirmar senha</label><input id="regPass2" type="password" placeholder="Repita a senha" />
+      <div id="regErr" class="hidden" style="background:#fee4e2;color:#b42318;border-radius:8px;padding:10px 14px;margin-top:14px;font-size:13px;font-weight:700"></div>
+      <div id="regOk" class="hidden" style="background:#dcfae6;color:#027a48;border-radius:8px;padding:10px 14px;margin-top:14px;font-size:13px;font-weight:700">Cadastro enviado! Aguarde aprovação do administrador.</div>
+      <button class="btn" onclick="doRegister()">Solicitar Cadastro</button>
+    </div>
+  </div>
+</section>
+ 
+<section id="app" class="app hidden">
+  <aside class="sidebar">
+    <div class="side-brand"><h1>GLOBAL <span>RISER</span></h1><p>Especificações Técnicas</p></div>
+    <nav class="nav">
+      <button class="active" data-page="dashboard" onclick="showPage('dashboard')">▦ Dashboard</button>
+      <button data-page="specs" onclick="showPage('specs')">▤ Especificações</button>
+      <button data-page="requests" onclick="showPage('requests')">📋 Solicitações</button>
+      <button data-page="clients" onclick="showPage('clients')">◌ Clientes</button>
+      <button data-page="users" onclick="showPage('users')">👥 Usuários</button>
+      <button data-page="history" onclick="showPage('history')">↯ Histórico</button>
+    </nav>
+    <div class="userbox"><b id="loggedName">Administrador</b><br><span id="loggedRole">Administrador</span><br><br><button class="iconbtn" onclick="exportBackup()" style="margin-bottom:8px;width:100%">💾 Backup JSON</button><button class="iconbtn" onclick="exportExcel()" style="margin-bottom:8px;width:100%">📊 Backup Excel</button><button class="iconbtn" onclick="doLogout()">Sair</button></div>
+  </aside>
+  <main class="content">
+    <section id="dashboard" class="page"></section>
+    <section id="specs" class="page hidden"></section>
+    <section id="requests" class="page hidden"></section>
+    <section id="clients" class="page hidden"></section>
+    <section id="users" class="page hidden"></section>
+    <section id="history" class="page hidden"></section>
+  </main>
+</section>
+ 
+<div id="modal" class="modal hidden"></div>
+ 
+<!-- Firebase SDKs -->
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getFirestore, doc, getDoc, setDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+ 
+const firebaseConfig = {
+  apiKey: "AIzaSyCbDsyqN4Xd45kLMUkv9T-kuMdwsFJdusY",
+  authDomain: "global-riser.firebaseapp.com",
+  projectId: "global-riser",
+  storageBucket: "global-riser.firebasestorage.app",
+  messagingSenderId: "238012432486",
+  appId: "1:238012432486:web:77501c764649f467026da7",
+  measurementId: "G-BEG9DC2H1E"
+};
+ 
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+const DB_DOC = doc(db, "globalriser", "maindb");
+ 
+const DEFAULT_DB = {
+  users: [{name:'Administrador',login:'admin',password:'admin123',role:'Administrador'}],
+  clients: [{id:1,name:'Valaris',models:['MR-6H','MEG6']},{id:2,name:'Global Riser',models:['Primus FTH']}],
+  specs: [
+    {id:1,part:'GR-SC-001',name:'Stop Collar',client:'Valaris',model:'MR-6H',riserType:'MR-6H',classification:'Itens de Fixação',type:'Assembly',category:'Montagem',preservation:'Jotamastic 90 / proteção anticorrosiva',torques:['120 Nm','140 Nm','','',''],revision:'Rev. A',notes:'Especificação inicial.',history:[]},
+    {id:2,part:'GR-SC-002',name:'Packer Hydraulic',client:'Valaris',model:'MEG6',riserType:'MEG6',classification:'Vedação',type:'Assembly',category:'Torque',preservation:'Graxa preservante e vedação protegida',torques:['80 Nm','','','',''],revision:'Rev. B',notes:'Controle de montagem.',history:[]},
+    {id:3,part:'GR-SL-003',name:'Slip Joint',client:'Global Riser',model:'Primus FTH',riserType:'Primus FTH',classification:'Partes Móveis',type:'Part',category:'Reparo',preservation:'Óleo protetivo temporário',torques:['','','','',''],revision:'Rev. A',notes:'Aplicável a reparo.',history:[]}
+  ],
+  requests: [],
+  audit: []
+};
+ 
+let appDb = null;
+let currentUser = 'Administrador';
+ 
+async function saveToFirebase() {
+  try {
+    await setDoc(DB_DOC, { data: JSON.stringify(appDb) });
+  } catch(e) { console.error('Erro ao salvar:', e); }
+}
+ 
+// Carrega dados e inicializa app
+async function initApp() {
+  try {
+    const snap = await getDoc(DB_DOC);
+    if (snap.exists()) {
+      appDb = JSON.parse(snap.data().data);
+    } else {
+      appDb = DEFAULT_DB;
+      await saveToFirebase();
+    }
+  } catch(e) {
+    console.error('Erro ao carregar:', e);
+    appDb = DEFAULT_DB;
+  }
+ 
+  // Escuta mudanças em tempo real
+  onSnapshot(DB_DOC, (snap) => {
+    if (snap.exists()) {
+      const newDb = JSON.parse(snap.data().data);
+      appDb = newDb;
+      renderAll();
+    }
+  });
+ 
+  document.getElementById('loadingOverlay').classList.add('hidden');
+  document.getElementById('login').classList.remove('hidden');
+}
+ 
+initApp();
+ 
+// Expõe para o escopo global
+window._db = () => appDb;
+window._save = saveToFirebase;
+window._setDb = (d) => { appDb = d; };
+window._setUser = (u) => { currentUser = u; };
+window._getUser = () => currentUser;
+window._setRole = (r) => { window._currentRole = r; };
+window._getRole = () => window._currentRole || 'Usuário comum';
+</script>
+ 
+<script>
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal();});
+function db(){return window._db();}
+function save(){window._save();}
+function now(){return new Date().toLocaleString('pt-BR')}
+function audit(action,module,detail,revision=''){
+  db().audit.unshift({date:now(),user:window._getUser(),action,module,detail,revision});
+  save();
+}
+ 
+function doLogin(){
+  const u=document.getElementById('loginUser').value.trim();
+  const p=document.getElementById('loginPass').value;
+  if(!u||!p){document.getElementById('loginErr').classList.remove('hidden');return;}
+  const found=db().users.find(x=>x.login===u && x.password===p);
+  if(!found){document.getElementById('loginErr').classList.remove('hidden');return;}
+  if(found.pending){
+    const errEl=document.getElementById('loginErr');
+    errEl.textContent='Seu cadastro ainda está pendente de aprovação pelo administrador.';
+    errEl.classList.remove('hidden');return;
+  }
+  document.getElementById('loginErr').classList.add('hidden');
+  window._setUser(found.name);
+  window._setRole(found.role);
+  document.getElementById('loggedName').innerText=found.name;
+  document.getElementById('loggedRole').innerText=found.role;
+  document.getElementById('login').classList.add('hidden');
+  document.getElementById('app').classList.remove('hidden');
+  audit('Login/Acesso','Autenticação','Usuário acessou o sistema');
+  renderAll();
+}
+function doLogout(){audit('Logout','Autenticação','Usuário saiu do sistema');location.reload()}
+function showPage(id){document.querySelectorAll('.page').forEach(p=>p.classList.add('hidden'));document.getElementById(id).classList.remove('hidden');document.querySelectorAll('.nav button').forEach(b=>b.classList.toggle('active',b.dataset.page===id));renderAll()}
+function renderAll(){renderDash();renderSpecs();renderClients();renderUsers();renderHistory();renderRequests()}
+function unique(arr){return [...new Set(arr.filter(Boolean))]}
+ 
+/* DASHBOARD */
+function renderDash(){let cls={};let types={};db().specs.forEach(s=>{cls[s.classification]=(cls[s.classification]||0)+1;types[s.type]=(types[s.type]||0)+1});const pendentes=db().requests.filter(r=>r.status==='Pendente').length;document.getElementById('dashboard').innerHTML=`<div class="top"><div><h2>Dashboard</h2><p>Visão geral do sistema de especificações.</p></div></div><div class="grid"><div class="card metric">Total de Especificações<strong>${db().specs.length}</strong></div><div class="card metric">Clientes Ativos<strong>${db().clients.length}</strong></div><div class="card metric">Solicitações Pendentes<strong style="color:${pendentes>0?'#b54708':'#027a48'}">${pendentes}</strong></div></div><div class="grid" style="margin-top:18px"><div class="card"><h3>Por Classificação</h3><br>${Object.entries(cls).map(([k,v])=>`<p>${k} <b style="float:right">${v}</b></p><br>`).join('')}</div><div class="card"><h3>Por Tipo</h3><br>${Object.entries(types).map(([k,v])=>`<p>${k} <b style="float:right">${v}</b></p><br>`).join('')}</div><div class="card"><h3>Histórico Recente</h3><br>${db().audit.slice(0,4).map(h=>`<p><b>${h.action}</b><br><span class="muted">${h.user} • ${h.date}</span></p><br>`).join('')||'<p class="muted">Sem histórico.</p>'}</div></div><div class="card" style="margin-top:18px"><h3>Especificações Recentes</h3><br>${tableSpecs(db().specs.slice(0,5),false)}</div>`}
+ 
+/* ESPECIFICAÇÕES */
+function tableSpecs(list,withActions=true){return `<div class="table-wrap"><table class="table"><thead><tr><th>Part Number</th><th>Modelo de Riser</th><th>Nome</th><th>Cliente</th><th>Classificação</th><th>Tipo</th><th>Categoria</th>${withActions?'<th>Ações</th>':''}</tr></thead><tbody>${list.map(s=>`<tr><td>${s.part}</td><td><span class="badge green">${s.model}</span></td><td><b>${s.name}</b></td><td>${s.client}</td><td><span class="badge">${s.classification}</span></td><td><span class="badge dark">${s.type}</span></td><td><span class="badge warn">${s.category}</span></td>${withActions?`<td class="actions"><button class="iconbtn" onclick="openSpec(${s.id})">Editar</button><button class="iconbtn" onclick="openSpecHistory(${s.id})">Histórico</button><button class="iconbtn" onclick="printSpec(${s.id})">Imprimir</button><button class="iconbtn danger" onclick="delSpec(${s.id})">Excluir</button></td>`:''}</tr>`).join('')||`<tr><td colspan="${withActions?8:7}" class="empty">Nenhuma especificação encontrada.</td></tr>`}</tbody></table></div>`}
+function renderSpecs(){const clients=unique(db().specs.map(s=>s.client));const models=unique(db().specs.map(s=>s.model));document.getElementById('specs').innerHTML=`<div class="top"><div><h2>Especificações</h2><p>Filtros por cliente, modelo de riser e categoria pesquisável.</p></div><button class="btn" onclick="openSpec()">Nova Especificação</button></div><div class="toolbar"><input id="q" oninput="filterSpecs()" placeholder="Pesquisar part number, nome, modelo..."><select id="fClient" onchange="filterSpecs()"><option value="">Todos os clientes</option>${clients.map(c=>`<option>${c}</option>`).join('')}</select><select id="fModel" onchange="filterSpecs()"><option value="">Todos os modelos</option>${models.map(m=>`<option>${m}</option>`).join('')}</select><select id="fCategory" onchange="filterSpecs()"><option value="">Todas as categorias</option><option>Torque</option><option>Montagem</option><option>Reparo</option><option>Solda</option></select><button class="btn secondary" onclick="clearSpecFilters()" style="white-space:nowrap">Limpar filtros</button></div><div class="card" id="specTable"></div>`;filterSpecs()}
+function filterSpecs(){let q=(document.getElementById('q')?.value||'').toLowerCase(),c=document.getElementById('fClient')?.value||'',m=document.getElementById('fModel')?.value||'',cat=document.getElementById('fCategory')?.value||'';let list=db().specs.filter(s=>(!q||JSON.stringify(s).toLowerCase().includes(q))&&(!c||s.client===c)&&(!m||s.model===m)&&(!cat||s.category===cat));document.getElementById('specTable').innerHTML=tableSpecs(list)}
+function openSpec(id){let s=db().specs.find(x=>x.id===id)||{id:0,part:'',name:'',client:'',model:'',riserType:'',classification:'',type:'Assembly',category:'Montagem',preservation:'',torques:['','','','',''],revision:'',notes:'',history:[]};document.getElementById('modal').classList.remove('hidden');document.getElementById('modal').innerHTML=`<div class="modal-box"><div class="modal-head"><h2>${id?'Editar':'Nova'} Especificação Técnica</h2><button class="close" onclick="closeModal()">×</button></div><div class="form"><label>Part Number<input id="part" value="${s.part}"></label><label>Nome<input id="name" value="${s.name}"></label><label>Cliente<input id="client" value="${s.client}" placeholder="Nome/empresa, sem unidade da plataforma"></label><label>Modelo de Riser<input id="model" value="${s.model}"></label><label>Tipo do Riser<input id="riserType" value="${s.riserType}"></label><label>Classificação<input id="classification" value="${s.classification}"></label><label>Tipo<select id="type"><option ${s.type==='Assembly'?'selected':''}>Assembly</option><option ${s.type==='Part'?'selected':''}>Part</option></select></label><label>Categoria da especificação<select id="category"><option ${s.category==='Torque'?'selected':''}>Torque</option><option ${s.category==='Montagem'?'selected':''}>Montagem</option><option ${s.category==='Reparo'?'selected':''}>Reparo</option><option ${s.category==='Solda'?'selected':''}>Solda</option></select></label><label class="full">Material de preservação recomendado<textarea id="preservation" rows="2">${s.preservation}</textarea></label>${[0,1,2,3,4].map(i=>`<label>Torque ${i+1}<input id="torque${i}" value="${s.torques[i]||''}" placeholder="Opcional"></label>`).join('')}<label>Nome da revisão atualizada<input id="revision" value="${s.revision}"></label><label class="full">Observações<textarea id="notes" rows="3">${s.notes}</textarea></label></div><br><button class="btn" onclick="saveSpec(${s.id})">Salvar</button></div>`}
+function saveSpec(id){const part=v('part'),name=v('name'),client=v('client'),model=v('model');if(!part||!name||!client||!model){['part','name','client','model'].forEach(f=>{const el=document.getElementById(f);if(el)el.style.border=el.value.trim()?'':'2px solid #b42318';});alert('Preencha os campos obrigatórios: Part Number, Nome, Cliente e Modelo.');return;}let data={id:id||Date.now(),part:v('part'),name:v('name'),client:v('client'),model:v('model'),riserType:v('riserType'),classification:v('classification'),type:v('type'),category:v('category'),preservation:v('preservation'),torques:[0,1,2,3,4].map(i=>v('torque'+i)),revision:v('revision'),notes:v('notes'),history:[]};let action=id?'Edição':'Criação';let idx=db().specs.findIndex(s=>s.id===id);if(idx>=0){data.history=db().specs[idx].history||[];db().specs[idx]=data}else db().specs.unshift(data);data.history.unshift({date:now(),user:window._getUser(),action,revision:data.revision});audit(action,'Especificações',`${data.part} - ${data.name}`,data.revision);closeModal();save();showPage('specs')}
+function v(id){return document.getElementById(id).value.trim()}
+function closeModal(){document.getElementById('modal').classList.add('hidden')}
+function openSpecHistory(id){let s=db().specs.find(x=>x.id===id);document.getElementById('modal').classList.remove('hidden');document.getElementById('modal').innerHTML=`<div class="modal-box"><div class="modal-head"><h2>Histórico de Edições - ${s.part}</h2><button class="close" onclick="closeModal()">×</button></div><div class="history-list">${(s.history||[]).map(h=>`<div class="history-item"><b>${h.action}</b> • ${h.revision||'Sem revisão'}<br><span class="muted">${h.user} • ${h.date}</span></div>`).join('')||'<p class="empty">Ainda não há edições registradas.</p>'}</div></div>`}
+function delSpec(id){let s=db().specs.find(x=>x.id===id);if(confirm('Excluir especificação?')){window._db().specs=db().specs.filter(x=>x.id!==id);audit('Remoção','Especificações',`${s.part} - ${s.name}`,s.revision);save();showPage('specs')}}
+ 
+/* SOLICITAÇÕES */
+function renderRequests(){
+  const pend=db().requests.filter(r=>r.status==='Pendente').length;
+  document.getElementById('requests').innerHTML=`
+    <div class="top"><div><h2>Solicitações de Especificação</h2><p>Gerencie pedidos de especificações e gere o texto para e-mail.</p></div><button class="btn" onclick="openRequest()">Nova Solicitação</button></div>
+    <div style="display:flex;gap:12px;margin-bottom:18px">
+      <div class="card" style="flex:1;padding:16px"><span class="muted">Total</span><strong style="display:block;font-size:28px;margin-top:4px">${db().requests.length}</strong></div>
+      <div class="card" style="flex:1;padding:16px"><span class="muted">Pendentes</span><strong style="display:block;font-size:28px;margin-top:4px;color:${pend>0?'#b54708':'#027a48'}">${pend}</strong></div>
+      <div class="card" style="flex:1;padding:16px"><span class="muted">Atendidas</span><strong style="display:block;font-size:28px;margin-top:4px;color:#027a48">${db().requests.length-pend}</strong></div>
+    </div>
+    <div id="reqList">${db().requests.length===0?`<div class="card"><p class="empty">Nenhuma solicitação registrada ainda.</p></div>`:db().requests.map(r=>`
+      <div class="req-card">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:10px">
+          <div><h4>${r.solicitante} <span class="muted">— ${r.empresa||'Empresa não informada'}</span></h4><p class="muted" style="margin-top:4px">${r.date} • ${r.specs.length} especificação(ões)</p></div>
+          <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+            <span class="req-status ${r.status==='Pendente'?'pendente':'atendido'}">${r.status}</span>
+            <button class="iconbtn" onclick="viewEmailText(${r.id})">Ver E-mail</button>
+            ${r.status==='Pendente'?`<button class="iconbtn success" onclick="markAtendido(${r.id})">Marcar Atendido</button>`:''}
+            <button class="iconbtn danger" onclick="delRequest(${r.id})">Excluir</button>
+          </div>
+        </div>
+        <div style="margin-top:12px;display:flex;flex-wrap:wrap;gap:6px">${r.specs.map(s=>`<span class="badge purple">${s.part} — ${s.name}</span>`).join('')}</div>
+        ${r.obs?`<p style="margin-top:10px;font-size:13px;color:#475467"><b>Obs:</b> ${r.obs}</p>`:''}
+      </div>`).join('')}</div>`;
+}
+function openRequest(){
+  document.getElementById('modal').classList.remove('hidden');
+  document.getElementById('modal').innerHTML=`
+    <div class="modal-box">
+      <div class="modal-head"><h2>Nova Solicitação de Especificação</h2><button class="close" onclick="closeModal()">×</button></div>
+      <div class="form">
+        <label>Nome do solicitante<input id="rqNome" placeholder="Nome completo"></label>
+        <label>Empresa / Cliente<input id="rqEmpresa" placeholder="Nome da empresa"></label>
+        <label>E-mail do solicitante<input id="rqEmail" type="email" placeholder="email@empresa.com"></label>
+        <label>Contato / Telefone<input id="rqTel" placeholder="Opcional"></label>
+        <label class="full">Observações / Finalidade<textarea id="rqObs" rows="2" placeholder="Ex.: para campanha de manutenção preventiva..."></textarea></label>
+      </div>
+      <p style="margin:16px 0 8px;font-weight:700">Selecione as especificações solicitadas:</p>
+      <div class="spec-check-list" id="specCheckList">
+        ${db().specs.length===0?'<p class="empty">Nenhuma especificação cadastrada.</p>':db().specs.map(s=>`
+          <label class="spec-check-item">
+            <input type="checkbox" value="${s.id}" id="chk_${s.id}">
+            <div><b>${s.part}</b> — ${s.name}<span class="muted" style="display:block;font-size:12px">${s.client} • ${s.model} • ${s.category}</span></div>
+          </label>`).join('')}
+      </div>
+      <div class="modal-actions">
+        <button class="btn secondary" onclick="closeModal()">Cancelar</button>
+        <button class="btn" onclick="saveRequest()">Salvar e Gerar E-mail</button>
+      </div>
+    </div>`;
+}
+function saveRequest(){
+  const nome=document.getElementById('rqNome').value.trim();
+  const empresa=document.getElementById('rqEmpresa').value.trim();
+  const email=document.getElementById('rqEmail').value.trim();
+  const tel=document.getElementById('rqTel').value.trim();
+  const obs=document.getElementById('rqObs').value.trim();
+  if(!nome){alert('Informe o nome do solicitante.');return;}
+  const checked=db().specs.filter(s=>document.getElementById('chk_'+s.id)?.checked);
+  if(checked.length===0){alert('Selecione ao menos uma especificação.');return;}
+  const req={id:Date.now(),date:now(),solicitante:nome,empresa,email,tel,obs,specs:checked.map(s=>({id:s.id,part:s.part,name:s.name,model:s.model,client:s.client,category:s.category,preservation:s.preservation,torques:s.torques,revision:s.revision,notes:s.notes})),status:'Pendente'};
+  db().requests.unshift(req);
+  audit('Criação','Solicitações',`${nome} — ${checked.length} spec(s)`);
+  closeModal();save();showPage('requests');
+  setTimeout(()=>viewEmailText(req.id),200);
+}
+function buildEmailPT(r){const lines=r.specs.map((s,i)=>{const torqs=s.torques.filter(t=>t);return `${i+1}. ${s.part} — ${s.name}\n   Cliente: ${s.client} | Modelo: ${s.model} | Categoria: ${s.category}\n   Revisão: ${s.revision||'—'}\n   Preservação: ${s.preservation||'—'}${torqs.length?'\n   Torques: '+torqs.join(', '):''}${s.notes?'\n   Observações: '+s.notes:''}`}).join('\n\n');return `Assunto: Solicitação de Especificações Técnicas — Global Riser\n\nPrezados,\n\nSolicitamos o envio das seguintes especificações técnicas para análise e uso em campo.\n\nDADOS DO SOLICITANTE\nNome: ${r.solicitante}\nEmpresa: ${r.empresa||'—'}\nE-mail: ${r.email||'—'}\nContato: ${r.tel||'—'}\nData da solicitação: ${r.date}\n\nESPECIFICAÇÕES SOLICITADAS (${r.specs.length} item${r.specs.length>1?'s':''})\n\n${lines}\n${r.obs?'\nOBSERVAÇÕES / FINALIDADE\n'+r.obs+'\n':''}\nAguardamos o retorno com a documentação disponível.\n\nAtenciosamente,\n${r.solicitante}\n${r.empresa||''}`}
+function buildEmailEN(r){const lines=r.specs.map((s,i)=>{const torqs=s.torques.filter(t=>t);return `${i+1}. ${s.part} — ${s.name}\n   Client: ${s.client} | Model: ${s.model} | Category: ${s.category}\n   Revision: ${s.revision||'—'}\n   Preservation: ${s.preservation||'—'}${torqs.length?'\n   Torques: '+torqs.join(', '):''}${s.notes?'\n   Notes: '+s.notes:''}`}).join('\n\n');return `Subject: Technical Specification Request — Global Riser\n\nDear Team,\n\nWe kindly request the technical specifications listed below for field analysis and reference.\n\nREQUESTER INFORMATION\nName: ${r.solicitante}\nCompany: ${r.empresa||'—'}\nE-mail: ${r.email||'—'}\nContact: ${r.tel||'—'}\nRequest date: ${r.date}\n\nREQUESTED SPECIFICATIONS (${r.specs.length} item${r.specs.length>1?'s':''})\n\n${lines}\n${r.obs?'\nNOTES / PURPOSE\n'+r.obs+'\n':''}\nWe look forward to receiving the documentation at your earliest convenience.\n\nBest regards,\n${r.solicitante}\n${r.empresa||''}`}
+function viewEmailText(id){
+  const r=db().requests.find(x=>x.id===id);if(!r)return;
+  window._emailPT=buildEmailPT(r);window._emailEN=buildEmailEN(r);window._emailTextToCopy=window._emailPT;
+  const specEditBtns=r.specs.map(s=>`<button class="iconbtn" style="font-size:12px" onclick="openSpecFromRequest(${s.id},${id})">✏️ ${s.part}</button>`).join('');
+  document.getElementById('modal').classList.remove('hidden');
+  document.getElementById('modal').innerHTML=`<div class="modal-box"><div class="modal-head"><h2>E-mail da Solicitação — ${r.solicitante}</h2><button class="close" onclick="closeModal()">×</button></div><div style="margin-bottom:12px"><p style="font-size:13px;font-weight:700;margin-bottom:8px">Editar especificações desta solicitação:</p><div style="display:flex;flex-wrap:wrap;gap:8px">${specEditBtns}</div></div><div style="display:flex;gap:0;margin-bottom:12px;border-bottom:2px solid var(--border)"><button id="tabPT" onclick="switchEmailTab('PT')" style="padding:8px 20px;border-radius:8px 8px 0 0;background:var(--blue);color:#fff;font-weight:800;border:none">🇧🇷 Português</button><button id="tabEN" onclick="switchEmailTab('EN')" style="padding:8px 20px;border-radius:8px 8px 0 0;background:#eef4fb;color:#344054;font-weight:700;border:none;margin-left:4px">🇺🇸 English</button></div><p class="muted" style="margin-bottom:8px">Copie o texto abaixo e cole no seu cliente de e-mail.</p><div class="email-box" id="emailContent">${window._emailPT.replace(/</g,'&lt;').replace(/>/g,'&gt;')}</div><div style="display:flex;gap:10px;margin-top:14px;flex-wrap:wrap"><button class="btn" onclick="copyEmail()">Copiar Texto</button><button class="btn secondary" onclick="closeModal()">Fechar</button></div><div class="copy-banner" id="copyBanner">Texto copiado com sucesso! / Text copied successfully!</div></div>`;
+}
+function switchEmailTab(lang){window._emailTextToCopy=lang==='EN'?window._emailEN:window._emailPT;const box=document.getElementById('emailContent');if(box)box.innerHTML=window._emailTextToCopy.replace(/</g,'&lt;').replace(/>/g,'&gt;');const pt=document.getElementById('tabPT'),en=document.getElementById('tabEN');if(pt&&en){pt.style.background=lang==='PT'?'var(--blue)':'#eef4fb';pt.style.color=lang==='PT'?'#fff':'#344054';en.style.background=lang==='EN'?'var(--blue)':'#eef4fb';en.style.color=lang==='EN'?'#fff':'#344054';}}
+function copyEmail(){if(navigator.clipboard&&window._emailTextToCopy){navigator.clipboard.writeText(window._emailTextToCopy).then(()=>{const b=document.getElementById('copyBanner');if(b){b.style.display='block';setTimeout(()=>b.style.display='none',2500);}});}else{const el=document.getElementById('emailContent');const range=document.createRange();range.selectNodeContents(el);const sel=window.getSelection();sel.removeAllRanges();sel.addRange(range);document.execCommand('copy');sel.removeAllRanges();const b=document.getElementById('copyBanner');if(b){b.style.display='block';setTimeout(()=>b.style.display='none',2500);}}}
+function openSpecFromRequest(specId,requestId){const s=db().specs.find(x=>x.id===specId);if(!s){alert('Especificação não encontrada no cadastro principal.');return;}document.getElementById('modal').classList.remove('hidden');document.getElementById('modal').innerHTML=`<div class="modal-box"><div class="modal-head"><h2>Editar Especificação (via Solicitação)</h2><button class="close" onclick="viewEmailText(${requestId})">← Voltar</button></div><div class="form"><label>Part Number<input id="part" value="${s.part}"></label><label>Nome<input id="name" value="${s.name}"></label><label>Cliente<input id="client" value="${s.client}"></label><label>Modelo de Riser<input id="model" value="${s.model}"></label><label>Tipo do Riser<input id="riserType" value="${s.riserType}"></label><label>Classificação<input id="classification" value="${s.classification}"></label><label>Tipo<select id="type"><option ${s.type==='Assembly'?'selected':''}>Assembly</option><option ${s.type==='Part'?'selected':''}>Part</option></select></label><label>Categoria<select id="category"><option ${s.category==='Torque'?'selected':''}>Torque</option><option ${s.category==='Montagem'?'selected':''}>Montagem</option><option ${s.category==='Reparo'?'selected':''}>Reparo</option><option ${s.category==='Solda'?'selected':''}>Solda</option></select></label><label class="full">Preservação<textarea id="preservation" rows="2">${s.preservation}</textarea></label>${[0,1,2,3,4].map(i=>`<label>Torque ${i+1}<input id="torque${i}" value="${s.torques[i]||''}"></label>`).join('')}<label>Revisão<input id="revision" value="${s.revision}"></label><label class="full">Observações<textarea id="notes" rows="3">${s.notes}</textarea></label></div><br><div style="display:flex;gap:10px"><button class="btn" onclick="saveSpecFromRequest(${s.id},${requestId})">Salvar e Voltar ao E-mail</button><button class="btn secondary" onclick="closeModal()">Cancelar</button></div></div>`}
+function saveSpecFromRequest(specId,requestId){const part=v('part'),name=v('name'),client=v('client'),model=v('model');if(!part||!name||!client||!model){alert('Preencha os campos obrigatórios.');return;}let idx=db().specs.findIndex(s=>s.id===specId);if(idx<0){alert('Especificação não encontrada.');return;}const prev=db().specs[idx];const data={...prev,part,name,client,model,riserType:v('riserType'),classification:v('classification'),type:v('type'),category:v('category'),preservation:v('preservation'),torques:[0,1,2,3,4].map(i=>v('torque'+i)),revision:v('revision'),notes:v('notes')};data.history=[...(prev.history||[])];data.history.unshift({date:now(),user:window._getUser(),action:'Edição via Solicitação',revision:data.revision});db().specs[idx]=data;const reqIdx=db().requests.findIndex(r=>r.id===requestId);if(reqIdx>=0){const sIdx=db().requests[reqIdx].specs.findIndex(s=>s.id===specId);if(sIdx>=0)db().requests[reqIdx].specs[sIdx]={id:data.id,part:data.part,name:data.name,model:data.model,client:data.client,category:data.category,preservation:data.preservation,torques:data.torques,revision:data.revision,notes:data.notes};}audit('Edição via Solicitação','Especificações',`${data.part} - ${data.name}`,data.revision);save();setTimeout(()=>viewEmailText(requestId),100);}
+function markAtendido(id){const r=db().requests.find(x=>x.id===id);if(!r)return;r.status='Atendido';audit('Atualização','Solicitações',`Solicitação de ${r.solicitante} marcada como atendida`);save();showPage('requests');}
+function delRequest(id){const r=db().requests.find(x=>x.id===id);if(!r)return;if(confirm('Excluir esta solicitação?')){window._db().requests=db().requests.filter(x=>x.id!==id);audit('Remoção','Solicitações',`Solicitação de ${r.solicitante}`);save();showPage('requests');}}
+ 
+/* BACKUP JSON */
+function exportBackup(){
+  const data=JSON.stringify(db(),null,2);
+  const blob=new Blob([data],{type:'application/json'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');
+  a.href=url;a.download='globalriser-backup-'+new Date().toISOString().slice(0,10)+'.json';
+  a.click();URL.revokeObjectURL(url);
+  audit('Backup JSON','Sistema','Backup completo exportado');
+}
+ 
+/* BACKUP EXCEL */
+function exportExcel(){
+  const d=db();
+  const wb={SheetNames:[],Sheets:{}};
+ 
+  function toSheet(rows){
+    if(!rows||!rows.length)return {A1:{v:'Sem dados',t:'s'}};
+    const keys=Object.keys(rows[0]);
+    const ws={};
+    const range={s:{c:0,r:0},e:{c:keys.length-1,r:rows.length}};
+    keys.forEach((k,c)=>{ws[XLSX.utils.encode_cell({r:0,c})]={v:k,t:'s',s:{font:{bold:true}}};});
+    rows.forEach((row,r)=>{
+      keys.forEach((k,c)=>{
+        const val=Array.isArray(row[k])?row[k].filter(Boolean).join(', '):(row[k]??'');
+        ws[XLSX.utils.encode_cell({r:r+1,c})]={v:String(val),t:'s'};
+      });
+    });
+    ws['!ref']=XLSX.utils.encode_range(range);
+    return ws;
+  }
+ 
+  // Especificações — flatten torques
+  const specs=d.specs.map(s=>({
+    'Part Number':s.part,'Nome':s.name,'Cliente':s.client,'Modelo':s.model,
+    'Tipo Riser':s.riserType,'Classificação':s.classification,'Tipo':s.type,
+    'Categoria':s.category,'Preservação':s.preservation,
+    'Torque 1':s.torques[0]||'','Torque 2':s.torques[1]||'','Torque 3':s.torques[2]||'',
+    'Torque 4':s.torques[3]||'','Torque 5':s.torques[4]||'',
+    'Revisão':s.revision,'Observações':s.notes
+  }));
+ 
+  // Clientes
+  const clients=d.clients.map(c=>({'Nome':c.name,'Modelos':( c.models||[]).join(', ')}));
+ 
+  // Usuários
+  const users=d.users.map(u=>({'Nome':u.name,'Login':u.login,'Perfil':u.role,'Status':u.pending?'Pendente':'Ativo'}));
+ 
+  // Solicitações
+  const reqs=d.requests.map(r=>({
+    'Solicitante':r.solicitante,'Empresa':r.empresa,'Email':r.email,
+    'Telefone':r.tel,'Data':r.date,'Status':r.status,
+    'Specs Solicitadas':r.specs.map(s=>s.part).join(', '),'Observações':r.obs||''
+  }));
+ 
+  // Histórico
+  const audit=d.audit.map(h=>({'Data':h.date,'Usuário':h.user,'Ação':h.action,'Módulo':h.module,'Detalhe':h.detail,'Revisão':h.revision||''}));
+ 
+  wb.SheetNames.push('Especificações','Clientes','Usuários','Solicitações','Histórico');
+  wb.Sheets['Especificações']=toSheet(specs);
+  wb.Sheets['Clientes']=toSheet(clients);
+  wb.Sheets['Usuários']=toSheet(users);
+  wb.Sheets['Solicitações']=toSheet(reqs);
+  wb.Sheets['Histórico']=toSheet(audit);
+ 
+  const wbout=XLSX.write(wb,{bookType:'xlsx',type:'binary'});
+  function s2ab(s){const buf=new ArrayBuffer(s.length);const view=new Uint8Array(buf);for(let i=0;i<s.length;i++)view[i]=s.charCodeAt(i)&0xFF;return buf;}
+  const blob=new Blob([s2ab(wbout)],{type:'application/octet-stream'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');
+  a.href=url;a.download='globalriser-backup-'+new Date().toISOString().slice(0,10)+'.xlsx';
+  a.click();URL.revokeObjectURL(url);
+  audit('Backup Excel','Sistema','Backup Excel exportado');
+}
+ 
+/* AUTH TABS */
+function switchAuthTab(tab){
+  document.getElementById('formLogin').classList.toggle('hidden',tab!=='login');
+  document.getElementById('formRegister').classList.toggle('hidden',tab!=='register');
+  document.getElementById('tabLogin').style.background=tab==='login'?'var(--blue)':'rgba(255,255,255,.08)';
+  document.getElementById('tabLogin').style.color=tab==='login'?'#fff':'#8ab5d8';
+  document.getElementById('tabRegister').style.background=tab==='register'?'var(--blue)':'rgba(255,255,255,.08)';
+  document.getElementById('tabRegister').style.color=tab==='register'?'#fff':'#8ab5d8';
+}
+function doRegister(){
+  const name=document.getElementById('regName').value.trim();
+  const login=document.getElementById('regLogin').value.trim();
+  const pass=document.getElementById('regPass').value;
+  const pass2=document.getElementById('regPass2').value;
+  const errEl=document.getElementById('regErr');
+  const okEl=document.getElementById('regOk');
+  errEl.classList.add('hidden');okEl.classList.add('hidden');
+  if(!name||!login||!pass){errEl.textContent='Preencha todos os campos.';errEl.classList.remove('hidden');return;}
+  if(pass!==pass2){errEl.textContent='As senhas não coincidem.';errEl.classList.remove('hidden');return;}
+  if(db().users.find(u=>u.login===login)){errEl.textContent='Este login já está em uso.';errEl.classList.remove('hidden');return;}
+  db().users.push({name,login,password:pass,role:'Pendente',pending:true});
+  audit('Cadastro Pendente','Usuários',`${name} (${login}) solicitou acesso`);
+  save();
+  okEl.classList.remove('hidden');
+  document.getElementById('regName').value='';
+  document.getElementById('regLogin').value='';
+  document.getElementById('regPass').value='';
+  document.getElementById('regPass2').value='';
+}
+ 
+/* CLIENTES */
+function renderClients(){document.getElementById('clients').innerHTML=`<div class="top"><div><h2>Clientes</h2></div><button class="btn" onclick="openClient()">Adicionar Cliente</button></div><div class="card"><table class="table"><thead><tr><th>Cliente</th><th>Modelos de riser utilizados</th><th>Ações</th></tr></thead><tbody>${db().clients.map(c=>`<tr><td><b>${c.name}</b></td><td>${(c.models||[]).map(m=>`<span class="badge green">${m}</span>`).join(' ')||'<span class="muted">Nenhum modelo informado</span>'}</td><td class="actions"><button class="iconbtn" onclick="openClient(${c.id})">Editar</button><button class="iconbtn danger" onclick="delClient(${c.id})">Excluir</button></td></tr>`).join('')||'<tr><td colspan="3" class="empty">Nenhum cliente cadastrado.</td></tr>'}</tbody></table></div>`}
+function openClient(id){let c=db().clients.find(x=>x.id===id)||{id:0,name:'',models:[]};document.getElementById('modal').classList.remove('hidden');document.getElementById('modal').innerHTML=`<div class="modal-box"><div class="modal-head"><h2>${id?'Editar':'Novo'} Cliente</h2><button class="close" onclick="closeModal()">×</button></div><div class="form"><label class="full">Razão Social / Nome da Empresa<input id="clientName" value="${c.name||''}" placeholder="Nome da empresa"></label><label class="full">Modelos de Riser utilizados<input id="clientModels" value="${(c.models||[]).join(', ')}" placeholder="Ex.: Riser Flex 6, Riser Rígido 10"></label></div><p class="muted" style="margin-top:10px">Separe mais de um modelo por vírgula.</p><div class="modal-actions"><button class="btn secondary" onclick="closeModal()">Cancelar</button><button class="btn" onclick="saveClient(${c.id})">Salvar Cliente</button></div></div>`}
+function saveClient(id){let name=v('clientName');let models=v('clientModels').split(',').map(x=>x.trim()).filter(Boolean);if(!name){alert('Informe o nome do cliente.');return}let idx=db().clients.findIndex(c=>c.id===id);if(idx>=0){db().clients[idx]={id,name,models};audit('Edição','Clientes',name)}else{db().clients.push({id:Date.now(),name,models});audit('Criação','Clientes',name)}closeModal();save();showPage('clients')}
+function delClient(id){let c=db().clients.find(x=>x.id===id);if(!c)return;if(confirm('Excluir cliente?')){window._db().clients=db().clients.filter(x=>x.id!==id);audit('Remoção','Clientes',c.name);save();showPage('clients')}}
+ 
+/* USUÁRIOS */
+function renderUsers(){
+  const pending=db().users.filter(u=>u.pending);
+  const active=db().users.filter(u=>!u.pending);
+  document.getElementById('users').innerHTML=`
+    <div class="top"><div><h2>Usuários</h2><p>Gerencie usuários ativos e aprovar solicitações de cadastro.</p></div><button class="btn" onclick="openUser()">Adicionar Usuário</button></div>
+    ${pending.length?`<div class="card" style="margin-bottom:18px;border-left:4px solid #b54708"><h3 style="color:#b54708;margin-bottom:12px">⏳ Cadastros Pendentes (${pending.length})</h3>${pending.map((u,i)=>`<div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--border)"><div><b>${u.name}</b> <span class="muted">— ${u.login}</span></div><div style="display:flex;gap:8px"><button class="iconbtn success" onclick="approveUser('${u.login}')">✔ Aprovar</button><button class="iconbtn danger" onclick="rejectUser('${u.login}')">✖ Recusar</button></div></div>`).join('')}</div>`:''}
+    <div class="card"><table class="table"><thead><tr><th>Nome</th><th>Login</th><th>Perfil</th><th>Ações</th></tr></thead><tbody>${active.map((u,i)=>`<tr><td>${u.name}</td><td>${u.login}</td><td><span class="badge dark">${u.role}</span></td><td class="actions"><button class="iconbtn" onclick="openUser(${db().users.indexOf(u)})">Editar</button><button class="iconbtn danger" onclick="delUser(${db().users.indexOf(u)})">Excluir</button></td></tr>`).join('')||'<tr><td colspan="4" class="empty">Nenhum usuário cadastrado.</td></tr>'}</tbody></table></div>`;
+}
+function approveUser(login){
+  const idx=db().users.findIndex(u=>u.login===login);
+  if(idx<0)return;
+  db().users[idx].pending=false;
+  db().users[idx].role=db().users[idx].role==='Pendente'?'Usuário comum':db().users[idx].role;
+  audit('Aprovação','Usuários',`${db().users[idx].name} aprovado`);
+  save();showPage('users');
+}
+function rejectUser(login){
+  const u=db().users.find(x=>x.login===login);
+  if(!u)return;
+  if(confirm(`Recusar e remover cadastro de ${u.name}?`)){
+    window._db().users=db().users.filter(x=>x.login!==login);
+    audit('Recusa','Usuários',`${u.name} recusado`);
+    save();showPage('users');
+  }
+}
+function openUser(index){let u=(index!==undefined&&db().users[index])?db().users[index]:{name:'',login:'',password:'',role:'Usuário comum'};document.getElementById('modal').classList.remove('hidden');document.getElementById('modal').innerHTML=`<div class="modal-box"><div class="modal-head"><h2>${index!==undefined?'Editar':'Adicionar'} Usuário</h2><button class="close" onclick="closeModal()">×</button></div><div class="form"><label>Nome do usuário<input id="userName" value="${u.name||''}" placeholder="Nome completo"></label><label>Login<input id="userLogin" value="${u.login||''}" placeholder="login"></label><label>Senha<input id="userPass" type="password" placeholder="${index!==undefined?'Deixe em branco para manter':'Nova senha'}" value="${u.password||''}"></label><label>Perfil<select id="userRole"><option ${u.role==='Administrador'?'selected':''}>Administrador</option><option ${u.role==='Usuário comum'||u.role==='Usuário'?'selected':''}>Usuário comum</option><option ${u.role==='Visualização'?'selected':''}>Visualização</option></select></label></div><div class="modal-actions"><button class="btn secondary" onclick="closeModal()">Cancelar</button><button class="btn" onclick="saveUser(${index===undefined?-1:index})">Salvar Usuário</button></div></div>`}
+function saveUser(index){let name=v('userName'),login=v('userLogin'),password=document.getElementById('userPass').value,role=v('userRole');if(!name||!login){alert('Informe nome e login do usuário.');return;}if(index<0&&!password){alert('Defina uma senha para o novo usuário.');return;}let finalPass=password||(index>=0?db().users[index].password:'');if(!finalPass){alert('A senha não pode ficar em branco.');return;}let user={name,login,password:finalPass,role};if(index>=0){db().users[index]=user;audit('Edição','Usuários',name)}else{db().users.push(user);audit('Criação','Usuários',name)}closeModal();save();showPage('users');}
+function delUser(index){let u=db().users[index];if(!u)return;if(db().users.length===1){alert('É necessário manter pelo menos um usuário.');return}if(confirm('Excluir usuário?')){db().users.splice(index,1);audit('Remoção','Usuários',u.name);save();showPage('users')}}
+ 
+/* HISTÓRICO */
+function renderHistory(){document.getElementById('history').innerHTML=`<div class="top"><div><h2>Histórico Geral do Sistema</h2><p>Banco de atividades: quem mexeu, quando mexeu e em qual módulo.</p></div></div><div class="toolbar"><input id="hQ" oninput="filterHistory()" placeholder="Pesquisar histórico..."><select id="hM" onchange="filterHistory()"><option value="">Todos os módulos</option><option>Autenticação</option><option>Especificações</option><option>Clientes</option><option>Usuários</option><option>Solicitações</option></select></div><div class="card" id="historyTable"></div>`;filterHistory()}
+function filterHistory(){let q=(document.getElementById('hQ')?.value||'').toLowerCase(),m=document.getElementById('hM')?.value||'';let list=db().audit.filter(h=>(!q||JSON.stringify(h).toLowerCase().includes(q))&&(!m||h.module===m));document.getElementById('historyTable').innerHTML=`<table class="table"><thead><tr><th>Data/Hora</th><th>Usuário</th><th>Ação</th><th>Módulo</th><th>Detalhe</th><th>Revisão</th></tr></thead><tbody>${list.map(h=>`<tr><td>${h.date}</td><td>${h.user}</td><td>${h.action}</td><td>${h.module}</td><td>${h.detail}</td><td>${h.revision||'-'}</td></tr>`).join('')||'<tr><td colspan="6" class="empty">Sem registros.</td></tr>'}</tbody></table>`}
+ 
+/* FILTROS */
+function clearSpecFilters(){const q=document.getElementById('q');const fC=document.getElementById('fClient');const fM=document.getElementById('fModel');const fCat=document.getElementById('fCategory');if(q)q.value='';if(fC)fC.value='';if(fM)fM.value='';if(fCat)fCat.value='';filterSpecs();}
+ 
+/* IMPRIMIR */
+function printSpec(id){let s=db().specs.find(x=>x.id===id);if(!s)return;const torqs=s.torques.filter(t=>t).map((t,i)=>`<tr><td>Torque ${i+1}</td><td>${t}</td></tr>`).join('');const w=window.open('','_blank','width=800,height=700');w.document.write(`<!DOCTYPE html><html><head><meta charset="UTF-8"><title>${s.part} — ${s.name}</title><style>body{font-family:Arial,sans-serif;padding:32px;color:#152033}h1{color:#168fff;font-size:22px;margin-bottom:4px}h2{font-size:14px;color:#667085;font-weight:400;margin-bottom:24px}table{width:100%;border-collapse:collapse;margin-bottom:18px}th{background:#edf5ff;text-align:left;padding:9px 12px;font-size:12px;text-transform:uppercase;letter-spacing:.05em;color:#344054}td{padding:9px 12px;border-bottom:1px solid #e4eaf2;font-size:13px}.label{font-weight:700;color:#152033;width:200px}.header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:24px;padding-bottom:16px;border-bottom:2px solid #168fff}.meta{font-size:12px;color:#667085;text-align:right}.badge{display:inline-block;background:#edf5ff;color:#168fff;border-radius:5px;padding:3px 8px;font-size:11px;font-weight:700}@media print{body{padding:16px}}</style></head><body><div class="header"><div><h1>GLOBAL <em>RISER</em></h1><h2>Sistema de Especificações Técnicas</h2></div><div class="meta">Impresso em: ${new Date().toLocaleString('pt-BR')}<br>Usuário: ${window._getUser()}</div></div><h2 style="font-size:18px;font-weight:800;color:#152033;margin-bottom:4px">${s.part} — ${s.name}</h2><p style="margin-bottom:20px"><span class="badge">${s.model}</span> &nbsp; <span class="badge" style="background:#f0fdf4;color:#027a48">${s.classification}</span> &nbsp; <span class="badge" style="background:#fff7ed;color:#b45309">${s.category}</span></p><table><tr><th class="label">Campo</th><th>Valor</th></tr><tr><td class="label">Part Number</td><td>${s.part}</td></tr><tr><td class="label">Nome</td><td>${s.name}</td></tr><tr><td class="label">Cliente</td><td>${s.client}</td></tr><tr><td class="label">Modelo de Riser</td><td>${s.model}</td></tr><tr><td class="label">Tipo do Riser</td><td>${s.riserType}</td></tr><tr><td class="label">Classificação</td><td>${s.classification}</td></tr><tr><td class="label">Tipo</td><td>${s.type}</td></tr><tr><td class="label">Categoria</td><td>${s.category}</td></tr><tr><td class="label">Revisão</td><td>${s.revision||'—'}</td></tr><tr><td class="label">Preservação</td><td>${s.preservation||'—'}</td></tr>${torqs}<tr><td class="label">Observações</td><td>${s.notes||'—'}</td></tr></table>${s.history&&s.history.length?`<h3 style="margin-bottom:8px;font-size:13px;text-transform:uppercase;letter-spacing:.06em;color:#667085">Histórico de revisões</h3><table><tr><th>Ação</th><th>Revisão</th><th>Usuário</th><th>Data</th></tr>${s.history.map(h=>`<tr><td>${h.action}</td><td>${h.revision||'—'}</td><td>${h.user}</td><td>${h.date}</td></tr>`).join('')}</table>`:''}<script>window.onload=()=>window.print()<\/script></body></html>`);w.document.close();}
+</script>
+<!-- SheetJS for Excel export -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+</body>
+</html>
